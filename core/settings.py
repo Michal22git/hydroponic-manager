@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'user',
     'hydroponic_manager',
     'rest_framework',
     'django.contrib.admin',
