@@ -1,10 +1,10 @@
-from django.test import TestCase
 from django.contrib.auth.models import User
+from django.test import TestCase
 from rest_framework.test import APIRequestFactory
+
 from ..models import HydroponicSystem, Measurement
 from ..serializers import (
     HydroponicSystemSerializer,
-    MeasurementSerializer,
     MeasurementCreateSerializer
 )
 
