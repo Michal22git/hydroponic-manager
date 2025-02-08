@@ -84,4 +84,43 @@ class MeasurementViewSetTests(APITestCase):
         url = reverse('measurement-list')
         response = self.client.get(f'{url}?ph_min=7.0')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data['results']), 1) 
+        self.assertEqual(len(response.data['results']), 1)
+
+    def test_update_measurement(self):
+        measurement = Measurement.objects.create(
+            system=self.system,
+            ph=7.0,
+            tds=500,
+            water_temperature=25.0
+        )
+        url = reverse('measurement-detail', args=[measurement.id])
+        data = {'ph': 7.5}
+        response = self.client.patch(url, data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        measurement.refresh_from_db()
+        self.assertEqual(measurement.ph, 7.5) 
+
+    def test_delete_measurement(self):
+        measurement = Measurement.objects.create(
+            system=self.system,
+            ph=7.0,
+            tds=500,
+            water_temperature=25.0
+        )   
+        url = reverse('measurement-detail', args=[measurement.id])
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Measurement.objects.count(), 0)
+
+    def test_get_measurement_details(self):
+        measurement = Measurement.objects.create(
+            system=self.system,
+            ph=7.0,
+            tds=500,
+            water_temperature=25.0)
+        url = reverse('measurement-detail', args=[measurement.id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['ph'], 7.0)
+        self.assertEqual(response.data['tds'], 500)
+        self.assertEqual(response.data['water_temperature'], 25.0)
