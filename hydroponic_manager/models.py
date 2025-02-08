@@ -10,6 +10,9 @@ class HydroponicSystem(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Measurement(models.Model):
     system = models.ForeignKey(HydroponicSystem, on_delete=models.CASCADE)
@@ -22,3 +25,6 @@ class Measurement(models.Model):
     tds = models.PositiveIntegerField()
     water_temperature = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"System: {self.system.name} | pH: {self.ph} | TDS: {self.tds} | Temp: {self.water_temperature}°C"
