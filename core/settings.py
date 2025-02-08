@@ -37,6 +37,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'drf_yasg',
     'django_filters',
     'rest_framework_simplejwt.token_blacklist',
     'rest_framework_simplejwt',
